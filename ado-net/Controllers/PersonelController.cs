@@ -25,13 +25,20 @@ namespace ado_net.Controllers
                 SqlCommand cmd = new SqlCommand("select_all_personels", Con);
                 Con.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
+                string rolename = "";
 
-                
-                List<Personel> personel_list = new List<Personel>();
-                if (dr.HasRows)
-                {
+                List<Personel> personel_list = new List<Personel>();              
                     while (dr.Read())
                     {
+                  
+                        if (dr["roleid"].Equals(1))
+                        {
+                            rolename = "مدیر";
+                        }
+                        else
+                        {
+                            rolename = "کاربر عادی";
+                        }
                         personel_list.Add(new Personel()
                         {
                             ID = (int)dr["ID"],
@@ -40,10 +47,10 @@ namespace ado_net.Controllers
                             name = dr["name"].ToString(),
                             family = dr["family"].ToString(),
                             mellicode = dr["mellicode"].ToString(),
-                            mobile = dr["mobile"].ToString()
-                        });
-                    }
-                }
+                            mobile = dr["mobile"].ToString(),
+                            rolename = rolename
+                        }) ;
+                    }                
                 Con.Close();
                 return personel_list;
             }

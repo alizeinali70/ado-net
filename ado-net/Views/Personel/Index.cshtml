@@ -4,68 +4,79 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="card">
+    <div class="card-header  bg-primary">
+        <h3 class="card-title">لیست پرسنل</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.uname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.pass)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.family)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.mellicode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.mobile)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.rolename)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.uname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.pass)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.family)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.mellicode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.mobile)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.rolename)
+                        </td>
+                        <td>
+                            <a asp-controller="Personel" asp-action="Edit"><i class="fa fa-2x fa-edit text-success"></i></a> 
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.uname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.pass)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.family)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.mellicode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.mobile)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.uname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.pass)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.family)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.mellicode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.mobile)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                            <a asp-controller="Personel" asp-action="Delete"><i class="fa fa-2x fa-remove text-danger"></i></a> 
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
