@@ -23,7 +23,7 @@ namespace ado_net.Controllers
         }
 
         public IActionResult Index()
-        {          
+        {
             return View("Login");
         }
         public IActionResult Login()
@@ -46,9 +46,9 @@ namespace ado_net.Controllers
             if (dr.Read())
             {
                 HttpContext.Session.SetString("uname", username);
-                TempData["uname"]= HttpContext.Session.GetString("uname");
+                TempData["uname"] = HttpContext.Session.GetString("uname");
                 Con.Close();
-                return RedirectToAction("Index", "Dashboard");               
+                return RedirectToAction("Index", "Dashboard");
             }
             else
             {
@@ -64,14 +64,40 @@ namespace ado_net.Controllers
         [HttpPost]
         public IActionResult Register(string username, string password)
         {
-            Con = new SqlConnection(c.Con);
-            SqlCommand cmd = new SqlCommand("insert_user", Con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@uname", username);
-            cmd.Parameters.AddWithValue("@pass", password);
-            Con.Open();
-            cmd.ExecuteNonQuery();
-            return View("Login");
+            try
+            {
+                Con = new SqlConnection(c.Con);
+                Con.Open();
+
+                SqlCommand cmd_isexist = new SqlCommand("is_exist", Con);
+                cmd_isexist.CommandType = CommandType.StoredProcedure;
+                cmd_isexist.Parameters.AddWithValue("@uname", username);
+                SqlDataReader dr = cmd_isexist.ExecuteReader();
+                if (!dr.Read())
+                {
+
+
+                    SqlCommand cmd = new SqlCommand("insert_user", Con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@uname", username);
+                    cmd.Parameters.AddWithValue("@pass", password);
+
+                    cmd.ExecuteNonQuery();
+                    return View("Login");
+                }
+                else
+                {
+                    TempData["is_exist"] = "این نام کاربری تکراری می باشد";
+                    return View();
+                }
+            }
+            catch (Exception exp)
+            {
+
+                throw;
+            }
+
+
         }
 
         public IActionResult Privacy()

@@ -16,7 +16,7 @@ namespace ado_net.Controllers
 
         public IActionResult Index()
         {
-          //  string a = TempData["uname"].ToString();
+            TempData["uname"] = HttpContext.Session.GetString("uname");
             Check_Permission(HttpContext.Session.GetString("uname"));
             return View(Get_Personels());
         }

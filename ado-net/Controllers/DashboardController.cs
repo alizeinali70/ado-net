@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace ado_net.Controllers
     {
         public IActionResult Index()
         {
+            TempData["uname"] = HttpContext.Session.GetString("uname");
+
             return View();
         }
     }
