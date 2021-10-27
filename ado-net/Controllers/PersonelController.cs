@@ -1,7 +1,9 @@
 ﻿using ado_net.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 
@@ -14,7 +16,8 @@ namespace ado_net.Controllers
 
         public IActionResult Index()
         {
-
+          //  string a = TempData["uname"].ToString();
+            Check_Permission(HttpContext.Session.GetString("uname"));
             return View(Get_Personels());
         }
         public IEnumerable<Personel> Get_Personels()
@@ -50,17 +53,41 @@ namespace ado_net.Controllers
                             mobile = dr["mobile"].ToString(),
                             rolename = rolename
                         }) ;
-                    }                
+                    }        
+                    
                 Con.Close();
                 return personel_list;
             }
             catch (Exception exp)
             {
-
                 throw;
             }
 
 
+        }
+
+        public void Check_Permission(string username)
+        {
+            //username = TempData["uname"].ToString();
+            Con = new SqlConnection(c.Con);
+            SqlCommand cmd = new SqlCommand("check_permission", Con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@uname", username);
+            
+            Con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                if (dr["role"].ToString().ToLower().Equals("admin"))
+                {
+                    TempData["class"] = "visible";
+                }
+                else
+                {
+                    TempData["class"] = "hidden";
+                }
+            }
+            Con.Close();
         }
     }
 }

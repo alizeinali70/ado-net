@@ -7,6 +7,7 @@
 <div class="card">
     <div class="card-header  bg-primary">
         <h3 class="card-title">لیست پرسنل</h3>
+        @TempData["uname"]
     </div>
     <!-- /.card-header -->
     <div class="card-body p-0">
@@ -69,10 +70,12 @@
                             @Html.DisplayFor(modelItem => item.rolename)
                         </td>
                         <td>
-                            <a asp-controller="Personel" asp-action="Edit"><i class="fa fa-2x fa-edit text-success"></i></a> 
+                            <a asp-controller="Personel" asp-action="Edit"><i class="fa fa-2x fa-edit text-success"></i></a>
 
-                            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                            <a asp-controller="Personel" asp-action="Delete"><i class="fa fa-2x fa-remove text-danger"></i></a> 
+                            <a class="@TempData["class"]" asp-controller="Personel" asp-action="Delete">
+                                <i class="fa fa-2x fa-remove text-danger"></i>
+                            </a>
+
                         </td>
                     </tr>
                 }

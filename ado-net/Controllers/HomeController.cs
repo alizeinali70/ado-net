@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Http;
 
 namespace ado_net.Controllers
 {
@@ -22,8 +23,7 @@ namespace ado_net.Controllers
         }
 
         public IActionResult Index()
-        {
-          
+        {          
             return View("Login");
         }
         public IActionResult Login()
@@ -44,7 +44,9 @@ namespace ado_net.Controllers
             SqlDataReader dr = cmd.ExecuteReader();
 
             if (dr.Read())
-            { 
+            {
+                HttpContext.Session.SetString("uname", username);
+                TempData["uname"]= HttpContext.Session.GetString("uname");
                 Con.Close();
                 return RedirectToAction("Index", "Dashboard");               
             }

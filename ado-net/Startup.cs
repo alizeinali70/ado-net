@@ -24,6 +24,11 @@ namespace ado_net
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession();
+            //services.AddSession(options => {
+            //    options.IdleTimeout = TimeSpan.FromMinutes(10);
+           // });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +50,8 @@ namespace ado_net
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
